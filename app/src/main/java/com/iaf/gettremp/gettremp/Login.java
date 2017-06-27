@@ -34,6 +34,7 @@ private static final String TAG="MainActivity";
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    private String userID;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +81,9 @@ private static final String TAG="MainActivity";
                 if (!email.equals("")&&!pass.equals(""))
                 {
                     mAuth.signInWithEmailAndPassword(email,pass);
+                    FirebaseUser user=mAuth.getCurrentUser();
+                    userID=user.getUid();
+                    checkIfFirstLogin(userID);
                 }
                 else
                 {
@@ -91,37 +95,47 @@ private static final String TAG="MainActivity";
                 DatabaseReference myrootRef = database.getReference();
                 DatabaseReference Users = myrootRef.child("Users");
 
-                btnLogout.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        mAuth.signOut();
-                        makeToast("Signed out...");
-                    }
-                });
 
-                btnAddToDB.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent=new Intent(Login.this,AddToDb.class);
-                        startActivity(intent);
-                    }
-                });
+            }
+        });
 
-                btnViewUserInfo.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent=new Intent(Login.this,ViewDatabase.class);
-                        startActivity(intent);
-                    }
-                });
+        btnViewUserInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(Login.this,ViewDatabase.class);
+                startActivity(intent);
+            }
+        });
+
+        btnAddToDB.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(Login.this,AddToDb.class);
+                startActivity(intent);
+            }
+        });
+
+
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mAuth.signOut();
+                makeToast("Signed out...");
+            }
+        });
+
 
 //                myRef.setValue("Hello, World!");
 //                Intent intent=new Intent(getBaseContext(),SettingsActivity.class);
 //              startActivity(intent);
 
+    }
 
-            }
-        });
+    private boolean checkIfFirstLogin(String id) {
+
+
+
     }
 
     @Override
