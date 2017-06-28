@@ -31,10 +31,13 @@ import static com.google.firebase.auth.FirebaseAuth.*;
 
 public class Login extends AppCompatActivity {
 private static final String TAG="MainActivity";
-
+    int m=0;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     private String userID;
+    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference myRef = database.getReference();
+//    DatabaseReference Users = myRef.child("Users");
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,6 +53,35 @@ private static final String TAG="MainActivity";
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+
+
+
+        btnLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String email=etUserName.getText().toString();
+                String pass=etPassword.getText().toString();
+                if (!email.equals("")&&!pass.equals(""))
+                {
+                    mAuth.signInWithEmailAndPassword(email,pass);
+//                    FirebaseUser user=mAuth.getCurrentUser();
+//                    userID=user.getUid();
+//                   if (checkIfFirstLogin(userID))
+//                       makeToast("ddd");
+
+                }
+                else
+                {
+                    makeToast("you didnt fill all fields");
+
+                }
+
+
+
+
+            }
+        });
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -71,33 +103,6 @@ private static final String TAG="MainActivity";
         };
 
 
-
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                String email=etUserName.getText().toString();
-                String pass=etPassword.getText().toString();
-                if (!email.equals("")&&!pass.equals(""))
-                {
-                    mAuth.signInWithEmailAndPassword(email,pass);
-                    FirebaseUser user=mAuth.getCurrentUser();
-                    userID=user.getUid();
-                    checkIfFirstLogin(userID);
-                }
-                else
-                {
-                    makeToast("you didnt fill all fields");
-
-                }
-
-                final FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myrootRef = database.getReference();
-                DatabaseReference Users = myrootRef.child("Users");
-
-
-            }
-        });
 
         btnViewUserInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -132,11 +137,30 @@ private static final String TAG="MainActivity";
 
     }
 
-    private boolean checkIfFirstLogin(String id) {
+//    private boolean checkIfFirstLogin(String id) {
 
-
-
-    }
+//      myRef.addValueEventListener(new ValueEventListener() {
+//          @Override
+//          public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//              String Value=dataSnapshot.getValue(UserInformation.class).getIsFirstLogin();
+//              if (Value.equals("1"))
+//                 m=1;
+//              else
+//                  m=0;
+//
+//          }
+//
+//          @Override
+//          public void onCancelled(DatabaseError databaseError) {
+//
+//          }
+//
+//
+//      });
+//       if (m==1)return true;
+//        else return false;
+//    }
 
     @Override
     protected void onStart() {
