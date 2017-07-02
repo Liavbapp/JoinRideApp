@@ -34,6 +34,7 @@ private static final String TAG="MainActivity";
     int m=0;
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
+    FirebaseUser user;
     private String userID;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference myRef = database.getReference();
@@ -45,11 +46,12 @@ private static final String TAG="MainActivity";
 
         final Button btnLogin = (Button) findViewById(R.id.btnLogin);
         final Button btnLogout=(Button)findViewById(R.id.btnLogOut);
-        final Button btnAddToDB=(Button)findViewById(R.id.btnAddItemtoDB);
+//        final Button btnAddToDB=(Button)findViewById(R.id.btnAddItemtoDB);
         final EditText etUserName=(EditText)findViewById(R.id.etUserName);
         final EditText etPassword=(EditText)findViewById(R.id.etPassword);
-        final Button btnViewUserInfo=(Button)findViewById(R.id.btnViewDbInfo);
+//        final Button btnViewUserInfo=(Button)findViewById(R.id.btnViewDbInfo);
 
+        mAuth = FirebaseAuth.getInstance();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -65,10 +67,6 @@ private static final String TAG="MainActivity";
                 if (!email.equals("")&&!pass.equals(""))
                 {
                     mAuth.signInWithEmailAndPassword(email,pass);
-//                    FirebaseUser user=mAuth.getCurrentUser();
-//                    userID=user.getUid();
-//                   if (checkIfFirstLogin(userID))
-//                       makeToast("ddd");
 
                 }
                 else
@@ -76,23 +74,21 @@ private static final String TAG="MainActivity";
                     makeToast("you didnt fill all fields");
 
                 }
-
-
-
-
             }
         });
 
-        mAuth = FirebaseAuth.getInstance();
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
+           user = firebaseAuth.getCurrentUser();
+
+
                 if (user != null) {
                     // User is signed in
                     Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
                     makeToast("succesfully login with "+user.getEmail());
+                    checkIfFirstLogin(user.getUid());
                 } else {
                     // User is signed out
                     Log.d(TAG, "onAuthStateChanged:signed_out");
@@ -103,22 +99,23 @@ private static final String TAG="MainActivity";
         };
 
 
+//
+//        btnViewUserInfo.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent=new Intent(Login.this,ViewDatabase.class);
+//                startActivity(intent);
+//            }
+//        });
 
-        btnViewUserInfo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(Login.this,ViewDatabase.class);
-                startActivity(intent);
-            }
-        });
-
-        btnAddToDB.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent=new Intent(Login.this,AddToDb.class);
-                startActivity(intent);
-            }
-        });
+//        btnAddToDB.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+////                Intent intent=new Intent(Login.this,AddToDb.class);
+////                startActivity(intent);
+//
+//            }
+//        });
 
 
 
@@ -126,6 +123,7 @@ private static final String TAG="MainActivity";
             @Override
             public void onClick(View view) {
                 mAuth.signOut();
+
                 makeToast("Signed out...");
             }
         });
@@ -137,30 +135,38 @@ private static final String TAG="MainActivity";
 
     }
 
-//    private boolean checkIfFirstLogin(String id) {
+    private void checkIfFirstLogin(final String id) {
 
-//      myRef.addValueEventListener(new ValueEventListener() {
-//          @Override
-//          public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//              String Value=dataSnapshot.getValue(UserInformation.class).getIsFirstLogin();
-//              if (Value.equals("1"))
-//                 m=1;
-//              else
-//                  m=0;
-//
-//          }
-//
-//          @Override
-//          public void onCancelled(DatabaseError databaseError) {
-//
-//          }
-//
-//
-//      });
-//       if (m==1)return true;
-//        else return false;
-//    }
+      myRef.addValueEventListener(new ValueEventListener() {
+          @Override
+          public void onDataChange(DataSnapshot dataSnapshot) {
+              for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                  long Value = ds.child(id).getValue(UserInformation.class).getIsFirstLogin();
+                  if (Value == 1) {
+                      myRef.child("users").child(id).child("isFirstLogin").setValue(0);
+                      makeToast("First Login");
+                      Intent defaultpageIntent=new Intent(getBaseContext(),DefaultPage.class);
+                      startActivity(defaultpageIntent);
+                  }
+                  else
+                  {
+                      makeToast("Not first login");
+                  }
+
+
+
+              }
+          }
+
+          @Override
+          public void onCancelled(DatabaseError databaseError) {
+
+          }
+
+
+      });
+
+    }
 
     @Override
     protected void onStart() {

@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.iaf.gettremp.gettremp">
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET">
+        <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+        <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    </uses-permission>
 
     <application
         android:allowBackup="true"
@@ -26,6 +30,7 @@
         <activity android:name=".AddToDb"
           ></activity>
         <activity android:name=".ViewDatabase"></activity>
+        <activity android:name=".DefaultPage"></activity>
     </application>
 
 
