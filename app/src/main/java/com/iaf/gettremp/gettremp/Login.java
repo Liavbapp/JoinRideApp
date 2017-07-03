@@ -151,9 +151,9 @@ private static final String TAG="MainActivity";
                   }
                   else
                   {
-//                      Intent moveToMainIntent=new Intent(getBaseContext(),MainActivity.class);
-//                      startActivity(moveToMainIntent);
-
+                      Intent moveToMainIntent=new Intent(getBaseContext(),MainActivity.class);
+                      startActivity(moveToMainIntent);
+//gg
 
                   }
               }

@@ -77,10 +77,6 @@ public class DefaultPage extends AppCompatActivity {
         DialogFragment newFragment = new TimePickerFragment();
         newFragment.show(getSupportFragmentManager(), "timePicker");
 
-
-
-
-
     }
 
     private void makeToast(String toastMessage)
