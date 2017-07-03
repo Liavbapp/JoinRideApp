@@ -144,17 +144,14 @@ private static final String TAG="MainActivity";
                   long Value = ds.child(id).getValue(UserInformation.class).getIsFirstLogin();
                   if (Value == 1) {
                       myRef.child("users").child(id).child("isFirstLogin").setValue(0);
-                      makeToast("First Login");
+
                       Intent defaultpageIntent=new Intent(getBaseContext(),DefaultPage.class);
                       startActivity(defaultpageIntent);
                   }
                   else
                   {
-                      makeToast("Not first login");
+
                   }
-
-
-
               }
           }
 
