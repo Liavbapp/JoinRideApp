@@ -64,6 +64,7 @@ private static final String TAG="MainActivity";
 
                 String email=etUserName.getText().toString();
                 String pass=etPassword.getText().toString();
+              String koil="kk";
                 if (!email.equals("")&&!pass.equals(""))
                 {
                     mAuth.signInWithEmailAndPassword(email,pass);
