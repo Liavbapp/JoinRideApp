@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "908239880010",
+    "firebase_url": "https://gettremp-7fcb4.firebaseio.com",
+    "project_id": "gettremp-7fcb4",
+    "storage_bucket": "gettremp-7fcb4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:908239880010:android:a47519a3d500369e",
+        "android_client_info": {
+          "package_name": "com.iaf.gettremp.gettremp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "908239880010-7vjh8hv88kmnermt49qrps1hi1j4unrh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.iaf.gettremp.gettremp",
+            "certificate_hash": "c9ca3b9665a1a35c3dd2a733384d76e9eabbe90c"
+          }
+        },
+        {
+          "client_id": "908239880010-9217uv2sv2ospuohc6u4nb9hf3q3nqj7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPbP6kjvNjSx7T7eJF_Swuv07zcGOmFjs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "908239880010-9217uv2sv2ospuohc6u4nb9hf3q3nqj7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

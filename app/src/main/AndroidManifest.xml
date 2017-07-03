@@ -31,6 +31,7 @@
           ></activity>
         <activity android:name=".ViewDatabase"></activity>
         <activity android:name=".DefaultPage"></activity>
+        <activity android:name=".MainActivity"></activity>
     </application>
 
 
