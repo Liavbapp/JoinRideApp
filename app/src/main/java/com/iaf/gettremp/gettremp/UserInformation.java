@@ -9,6 +9,7 @@ public class UserInformation {
     private String Email;
     private String Name;
     private long isFirstLogin;
+    private long Points;
 
 
 
@@ -39,5 +40,13 @@ public UserInformation()
 
     public void setIsFirstLogin(long isfirstlogin) {
         this.isFirstLogin = isfirstlogin;
+    }
+
+    public long getPoints() {
+        return Points;
+    }
+
+    public void setPoints(long points) {
+        Points = points;
     }
 }

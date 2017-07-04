@@ -53,6 +53,7 @@ public class TimePickerFragment extends DialogFragment
         FirebaseUser user=mauth.getCurrentUser();
         String UserId=user.getUid();
         myRef.child("users").child(UserId).child("LeavingTime").setValue(leavingtime);
+        myRef.child("users").child(UserId).child("isFirstLogin").setValue(0);
 
         Intent moveToMainIntent=new Intent(getContext(),MainActivity.class);
         startActivity(moveToMainIntent);

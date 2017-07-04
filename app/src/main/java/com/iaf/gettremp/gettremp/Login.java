@@ -130,10 +130,6 @@ private static final String TAG="MainActivity";
         });
 
 
-//                myRef.setValue("Hello, World!");
-//                Intent intent=new Intent(getBaseContext(),SettingsActivity.class);
-//              startActivity(intent);
-
     }
 
     private void checkIfFirstLogin(final String id) {
@@ -144,17 +140,15 @@ private static final String TAG="MainActivity";
               for (DataSnapshot ds : dataSnapshot.getChildren()) {
                   long Value = ds.child(id).getValue(UserInformation.class).getIsFirstLogin();
                   if (Value == 1) {
-                      myRef.child("users").child(id).child("isFirstLogin").setValue(0);
 
                       Intent defaultpageIntent=new Intent(getBaseContext(),DefaultPage.class);
                       startActivity(defaultpageIntent);
+                      finish();
                   }
                   else
                   {
                       Intent moveToMainIntent=new Intent(getBaseContext(),MainActivity.class);
                       startActivity(moveToMainIntent);
-//gg
-
                   }
               }
           }
@@ -163,28 +157,13 @@ private static final String TAG="MainActivity";
           public void onCancelled(DatabaseError databaseError) {
 
           }
-
-
       });
-
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         mAuth.addAuthStateListener(mAuthListener);
-
-//        User_1.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-////do nothing fow now
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//
-//            }
-//        });
     }
     @Override
     public void onStop() {
